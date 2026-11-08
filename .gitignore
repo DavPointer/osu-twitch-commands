@@ -1,0 +1,13 @@
+# .NET build output
+bin/
+obj/
+*.user
+
+# OS junk
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Local test artifacts
+*.osk
+test.osk

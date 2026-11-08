@@ -1,0 +1,13 @@
+osu-twitch-commands
+Copyright 2026 DavPointer
+
+This product bundles third-party components:
+
+- Realm .NET (https://github.com/realm/realm-dotnet) — Apache License 2.0
+- MongoDB.Bson (https://github.com/mongodb/mongo-csharp-driver) — Apache License 2.0
+- Remotion.Linq (https://github.com/remotion/remotion) — Apache License 2.0
+
+Streamer.bot (https://streamer.bot), osu! (https://osu.ppy.sh), tosu
+(https://github.com/tosuapp/tosu), osutrack (https://osutrack-api.ameo.dev),
+x0.at (https://x0.at) and catbox.moe (https://catbox.moe) are external services
+or applications used by this project and are not part of it.
