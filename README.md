@@ -101,7 +101,7 @@ A Timed Action (`PP Tracker`, every 15 s) compares the current PP (from tosu) wi
 | [tosu](https://github.com/tosuapp/tosu) running, HTTP server on `127.0.0.1:24050` | `!np`, `!acc`, `!pp`, `!skin`, PP Gain |
 | osu! running (stable **or** lazer) | tosu |
 | osu! account with an OAuth application (read-only, `public` scope) | `!stats`, `!top`, `!recent`, `!best` |
-| .NET Runtime x64, version 8 or newer (8, 9, 10, 11, ...) | lazer skin export helper only |
+| [.NET Runtime x64](https://dotnet.microsoft.com/download) 8 or newer (10 LTS or 11 recommended; 8 and 9 are end-of-life since 10 Nov 2026) | lazer skin export helper only |
 
 Nothing else has to be installed: Streamer.bot ships the JSON library used by the actions.
 
@@ -269,7 +269,7 @@ cd src\helper
 dotnet publish -c Release -r win-x64 --self-contained false -o ..\..\data\osu-skin
 ```
 
-The folder must contain `osu-skin-export.exe` plus the managed dependencies (`Realm.dll`, `realm-wrappers.dll`, `MongoDB.Bson.dll`, `Remotion.Linq.dll`, `.deps.json`, `.runtimeconfig.json`). A framework-dependent build requires an x64 .NET Runtime 8 or newer; `src/helper/osu-skin-export.csproj` sets `<RollForward>Major</RollForward>`, so newer majors (9, 10, 11, ...) are accepted automatically. Use `--self-contained true` if you prefer a large, dependency-free build.
+The folder must contain `osu-skin-export.exe` plus the managed dependencies (`Realm.dll`, `realm-wrappers.dll`, `MongoDB.Bson.dll`, `Remotion.Linq.dll`, `.deps.json`, `.runtimeconfig.json`). A framework-dependent build requires an x64 .NET Runtime 8 or newer (pick .NET 10 LTS or .NET 11 for a supported version); `src/helper/osu-skin-export.csproj` sets `<RollForward>Major</RollForward>`, so newer majors (9, 10, 11, ...) are accepted automatically. You can build it with any SDK 8.0 or newer, the output stays `net8.0` on purpose. Use `--self-contained true` if you prefer a large, dependency-free build.
 
 The export uses [Realm .NET 20.1.0](https://github.com/realm/realm-dotnet) to read `client.realm` in read-only, dynamic mode, so it also works while osu!lazer is running.
 
