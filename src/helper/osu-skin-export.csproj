@@ -7,6 +7,8 @@
     <AssemblyName>osu-skin-export</AssemblyName>
     <RootNamespace>OsuSkinExport</RootNamespace>
     <InvariantGlobalization>true</InvariantGlobalization>
+    <!-- Run on any newer .NET runtime (8, 9, 10, 11, ...), not just 8.x. -->
+    <RollForward>Major</RollForward>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Realm" Version="20.1.0" />

@@ -101,7 +101,7 @@ A Timed Action (`PP Tracker`, every 15 s) compares the current PP (from tosu) wi
 | [tosu](https://github.com/tosuapp/tosu) running, HTTP server on `127.0.0.1:24050` | `!np`, `!acc`, `!pp`, `!skin`, PP Gain |
 | osu! running (stable **or** lazer) | tosu |
 | osu! account with an OAuth application (read-only, `public` scope) | `!stats`, `!top`, `!recent`, `!best` |
-| [.NET 8 Runtime x64](https://dotnet.microsoft.com/download/dotnet/8.0) | lazer skin export helper only |
+| .NET Runtime x64, version 8 or newer (8, 9, 10, 11, ...) | lazer skin export helper only |
 
 Nothing else has to be installed: Streamer.bot ships the JSON library used by the actions.
 
@@ -119,7 +119,7 @@ Or download the ZIP from the GitHub page and extract it anywhere.
 
 ### 2. Install the skin-export helper
 
-The helper is a small .NET 8 console application that exports osu!lazer skins out of `client.realm`.
+The helper is a small .NET 8 console application that exports osu!lazer skins out of `client.realm`. It runs on any newer x64 runtime (9, 10, 11, ...) thanks to `rollForward: Major` in its `.runtimeconfig.json`.
 
 Copy the whole `data\osu-skin` folder into the Streamer.bot **data** folder:
 
@@ -146,7 +146,7 @@ Quick check from PowerShell (replace the data folder with your lazer storage fol
 
 It prints a single JSON line such as
 `{"ok":true,"skin":"Amaestric","path":"...","entries":337,"bytes":16612192,"skipped":0}`.
-`{"ok":false,...}` means something is wrong (missing Realm database, unknown skin, missing .NET 8 runtime, ...).
+`{"ok":false,...}` means something is wrong (missing Realm database, unknown skin, missing .NET runtime, ...).
 
 ### 3. Import the commands
 
@@ -269,7 +269,7 @@ cd src\helper
 dotnet publish -c Release -r win-x64 --self-contained false -o ..\..\data\osu-skin
 ```
 
-The folder must contain `osu-skin-export.exe` plus the managed dependencies (`Realm.dll`, `realm-wrappers.dll`, `MongoDB.Bson.dll`, `Remotion.Linq.dll`, `.deps.json`, `.runtimeconfig.json`). A framework-dependent build requires the .NET 8 Runtime on the target machine; use `--self-contained true` if you prefer a large, dependency-free build.
+The folder must contain `osu-skin-export.exe` plus the managed dependencies (`Realm.dll`, `realm-wrappers.dll`, `MongoDB.Bson.dll`, `Remotion.Linq.dll`, `.deps.json`, `.runtimeconfig.json`). A framework-dependent build requires an x64 .NET Runtime 8 or newer; `src/helper/osu-skin-export.csproj` sets `<RollForward>Major</RollForward>`, so newer majors (9, 10, 11, ...) are accepted automatically. Use `--self-contained true` if you prefer a large, dependency-free build.
 
 The export uses [Realm .NET 20.1.0](https://github.com/realm/realm-dotnet) to read `client.realm` in read-only, dynamic mode, so it also works while osu!lazer is running.
 
@@ -287,13 +287,13 @@ The export uses [Realm .NET 20.1.0](https://github.com/realm/realm-dotnet) to re
 | `No beatmap is currently playing.` | tosu idle / in the menus | start a beatmap |
 | `Failed to fetch data from tosu.` | tosu not running or wrong port | start tosu, check `http://127.0.0.1:24050/json/v2` |
 | `Skin not found.` | tosu reports a skin folder that does not exist | check `folders.skin` / `settings.skin.name` |
-| `Could not create the .osk file.` | lazer export failed | check the log line `!skin: lazer export failed: ...`, the helper files and the .NET 8 runtime |
+| `Could not create the .osk file.` | lazer export failed | check the log line `!skin: lazer export failed: ...`, the helper files and the .NET runtime |
 | `Skin upload failed.` | both x0.at and catbox rejected the file | check the log, retry later or use a smaller skin |
 | `PP calculation failed, try again.` | tosu returned an invalid payload | retry while a beatmap is playing |
 | Skin link points to an old version | the cache is keyed by skin name | edit the skin, or delete `Links\<skin name>.txt` |
 | Commands imported but silent | they are imported **disabled** | enable them in the Commands tab |
 | Embedded C# errors at startup (`CSxxxx`) | modified sources / missing reference | restore the original `.sb` or recompile the sources |
-| Helper window flashes / no output | .NET 8 runtime missing | install the x64 .NET 8 Runtime |
+| Helper window flashes / no output | .NET runtime missing | install the x64 .NET Runtime (8 or newer) |
 
 ---
 
